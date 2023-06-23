@@ -79,21 +79,21 @@
 
         function crawl() {
             const urls = document.getElementById('urls').value.split(/[\n,]+/).map(url => url.trim());
-            axios.post('/crawl', { urls }).then(response => {
+            axios.post('https://toolhosting.digitalmethods.net/link-extractor/crawl', { urls }).then(response => {
                 data = response.data;
                 displayData();
             });
         }
 
         function process(option) {
-            axios.post('/process_data', { data, option }).then(response => {
+            axios.post('https://toolhosting.digitalmethods.net/link-extractor/process_data', { data, option }).then(response => {
                 data = response.data;
                 displayData();
             });
         }
 
         function exportCsv() {
-            axios.post('/export_csv', { data }, { responseType: 'blob' }).then(response => {
+            axios.post('https://toolhosting.digitalmethods.net/link-extractor/export_csv', { data }, { responseType: 'blob' }).then(response => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
@@ -104,7 +104,7 @@
         }
 
         function exportGexf() {
-            axios.post('/export_gexf', { data }, { responseType: 'blob' }).then(response => {
+            axios.post('https://toolhosting.digitalmethods.net/link-extractor/export_gexf', { data }, { responseType: 'blob' }).then(response => {
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const link = document.createElement('a');
                 link.href = url;
@@ -167,7 +167,7 @@
         }
 
         function createGraph() {
-            axios.post('/graph_data', { data }, { responseType: 'json' }).then(response => {
+            axios.post('https://toolhosting.digitalmethods.net/link-extractor/graph_data', { data }, { responseType: 'json' }).then(response => {
                 var nodes = new vis.DataSet(response.data.nodes);
                 var edges = new vis.DataSet(response.data.edges);
                 var container = document.getElementById('mynetwork');
