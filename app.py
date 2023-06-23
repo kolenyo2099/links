@@ -7,7 +7,7 @@ import networkx as nx
 
 app = Flask(__name__, static_folder='.', static_url_path='')
 
-@app.route('/crawl', methods=['POST'])
+@app.route('https://toolhosting.digitalmethods.net/link-extractor/crawl', methods=['POST'])
 def crawl():
     urls = request.json['urls']
     results = []
@@ -30,7 +30,7 @@ def extract_domain(url):
         domain = domain[4:]
     return domain
 
-@app.route('/process_data', methods=['POST'])
+@app.route('https://toolhosting.digitalmethods.net/link-extractor/process_data', methods=['POST'])
 def process_data():
     data = request.json['data']
     option = int(request.json['option'])
@@ -44,7 +44,7 @@ def process_data():
 
     return jsonify(data)
 
-@app.route('/export_csv', methods=['POST'])
+@app.route('https://toolhosting.digitalmethods.net/link-extractor/export_csv', methods=['POST'])
 def export_csv():
     data = request.json['data']
     with open('export.csv', 'w', newline='') as file:
@@ -54,7 +54,7 @@ def export_csv():
             writer.writerow([row['source'], row['target']])
     return send_file('export.csv', as_attachment=True)
 
-@app.route('/export_gexf', methods=['POST'])
+@app.route('https://toolhosting.digitalmethods.net/link-extractor/export_gexf', methods=['POST'])
 def export_gexf():
     data = request.json['data']
     G = nx.DiGraph()
@@ -63,7 +63,7 @@ def export_gexf():
     nx.write_gexf(G, "network.gexf")
     return send_file('network.gexf', as_attachment=True)
 
-@app.route('/graph_data', methods=['POST'])
+@app.route('https://toolhosting.digitalmethods.net/link-extractor/graph_data', methods=['POST'])
 def graph_data():
     data = request.get_json()['data']
     nodes = []
@@ -80,7 +80,7 @@ def graph_data():
 
     return jsonify({"nodes": nodes, "edges": edges})
 
-@app.route('/')
+@app.route('https://toolhosting.digitalmethods.net/link-extractor/')
 def home():
     return app.send_static_file('index.html')
 
